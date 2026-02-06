@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEGANCE | Admin & Sales</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-container"></div>
+    
+    <!-- Login Section -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="logo">ELEG<span>A</span>NCE</div>
+            <div id="login-view">
+                <p class="login-subtitle">Acesso Restrito | Admin</p>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="username">Usuário</label>
+                        <input type="text" id="username" placeholder="Digite seu usuário" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="btn-premium">Entrar</button>
+                    <div class="auth-footer">
+                        <p class="auth-toggle">Não tem conta? <a href="#" id="show-register">Cadastre-se</a></p>
+                        <p class="auth-toggle"><a href="#" id="show-change-password">Alterar Senha</a></p>
+                    </div>
+                    <div id="login-error" class="error-msg"></div>
+                </form>
+            </div>
+
+            <div id="register-view" style="display: none;">
+                <p class="login-subtitle">Criar Nova Conta</p>
+                <form id="register-form">
+                    <div class="input-group">
+                        <label for="reg-username">Novo Usuário</label>
+                        <input type="text" id="reg-username" placeholder="Escolha um usuário" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">Senha</label>
+                        <input type="password" id="reg-password" placeholder="Crie uma senha" required>
+                    </div>
+                    <button type="submit" class="btn-premium">Cadastrar</button>
+                    <p class="auth-toggle">Já tem conta? <a href="#" id="show-login">Fazer Login</a></p>
+                    <div id="register-error" class="error-msg"></div>
+                    <div id="register-success" class="success-msg"></div>
+                </form>
+            </div>
+
+            <div id="change-pass-view" style="display: none;">
+                <p class="login-subtitle">Alterar Senha</p>
+                <form id="change-pass-form">
+                    <div class="input-group">
+                        <label for="cp-username">Usuário</label>
+                        <input type="text" id="cp-username" placeholder="Seu usuário" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="cp-old-password">Senha Atual</label>
+                        <input type="password" id="cp-old-password" placeholder="Senha atual" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="cp-new-password">Nova Senha</label>
+                        <input type="password" id="cp-new-password" placeholder="Nova senha" required>
+                    </div>
+                    <button type="submit" class="btn-premium">Atualizar Senha</button>
+                    <p class="auth-toggle"><a href="#" id="show-login-from-cp">Voltar ao Login</a></p>
+                    <div id="cp-error" class="error-msg"></div>
+                    <div id="cp-success" class="success-msg"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper" id="main-content" style="display: none;">
+        <header>
+            <div class="logo">ELEG<span>A</span>NCE</div>
+            <div class="header-actions">
+                <span class="welcome">Olá, <span class="accent-name">Administrador</span></span>
+                <button id="logout-btn" class="btn-logout">Sair</button>
+                <button id="open-contact" class="btn-contact">Suporte</button>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Totals Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <span class="stat-label">Venda Total</span>
+                    <span id="stat-total" class="stat-value">R$ 0,00</span>
+                </div>
+                <div class="stat-card accent">
+                    <span class="stat-label">Comissão (40%)</span>
+                    <span id="stat-commission" class="stat-value">R$ 0,00</span>
+                </div>
+                <div class="stat-card highlight">
+                    <span class="stat-label">Repasse (60%)</span>
+                    <span id="stat-repasse" class="stat-value">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Sales Form Section -->
+                <section class="card glass-card">
+                    <h2 class="card-title">Nova Venda</h2>
+                    <form id="sales-form" class="premium-form">
+                        <div class="input-group">
+                            <label for="customer">Cliente</label>
+                            <input type="text" id="customer" placeholder="Nome do cliente" required>
+                        </div>
+                        
+                        <div id="items-container">
+                            <label>Produtos</label>
+                            <div class="item-row">
+                                <select class="product-select" required>
+                                    <option value="" disabled selected>Produto</option>
+                                    <option value="Brinco">Brinco</option>
+                                    <option value="Colar">Colar</option>
+                                    <option value="Pulseira">Pulseira</option>
+                                    <option value="Pingente">Pingente</option>
+                                    <option value="Anel">Anel</option>
+                                </select>
+                                <input type="number" class="product-amount" step="0.01" placeholder="Preço" required>
+                                <button type="button" class="btn-remove-item" style="display:none;">&times;</button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-item" class="btn-secondary">+ Adicionar Produto</button>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="payment-method">Forma de Pagamento</label>
+                                <select id="payment-method" required>
+                                    <option value="Pix">Pix</option>
+                                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                    <option value="Cartão de Débito">Cartão de Débito</option>
+                                    <option value="Dinheiro">Dinheiro</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="installments">Parcelas</label>
+                                <select id="installments" required>
+                                    <option value="1">1x (À vista)</option>
+                                    <option value="2">2x</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-total">
+                            <span>Subtotal:</span>
+                            <span id="form-total-value">R$ 0,00</span>
+                        </div>
+
+                        <button type="submit" class="btn-premium btn-form">Registrar Venda</button>
+                    </form>
+                </section>
+
+                <!-- Sales Management Section -->
+                <section class="card glass-card">
+                    <h2 class="card-title">Histórico de Gestão</h2>
+                    <div class="table-container">
+                        <table id="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Data & Cliente</th>
+                                    <th>Produtos & Valores</th>
+                                    <th>Total Bruto</th>
+                                    <th>Pagamento</th>
+                                    <th>Parcela 1</th>
+                                    <th>Parcela 2</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-list">
+                                <!-- JS Injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Suporte -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <h2>Suporte Aurion</h2>
+            <p>Dúvidas em como sincronizar com o Google Sheets?</p>
+            <div class="modal-btns">
+                <a href="https://wa.me/5518981014240" target="_blank" class="btn-modal-primary">WhatsApp Suporte</a>
+                <button class="btn-modal-close" id="modal-close">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
