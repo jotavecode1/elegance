@@ -5,10 +5,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (urlParams.get('success') === 'subscription') alert('Assinatura realizada com sucesso!');
     if (urlParams.get('canceled') === 'true') alert('Pagamento cancelado ou falhou.');
     // --- BACKEND CONFIG ---
-    let API_URL = 'http://127.0.0.1:3000/api'; // Default local
+    let API_URL = 'http://127.0.0.1:3001/api'; // Porta 3001 para evitar conflitos
     if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.hostname !== '') {
         API_URL = '/api'; // Versão Live (Vercel)
     }
+
+    // --- TESTE DE CONEXÃO INICIAL ---
+    fetch(`${API_URL}/ping`)
+        .then(r => r.json())
+        .then(d => console.log('Conexão Backend:', d))
+        .catch(e => console.error('Erro de Conexão Inicial:', e));
 
     // --- TAB SWITCHING ---
     const tabDashboard = document.getElementById('tab-dashboard');

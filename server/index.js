@@ -16,7 +16,7 @@ const app = express();
 // --- 1. CONFIGURAÇÕES DE SEGURANÇA (HEADERS & CORS) ---
 app.use(helmet()); 
 
-app.get('/api/ping', (req, res) => res.send('pong'));
+app.get('/api/ping', (req, res) => res.json({ success: true, message: 'Servidor Elegance 3001 Online' }));
 const corsOptions = {
     origin: function (origin, callback) {
         // Permitir tudo momentaneamente para resolver o erro de conexão do usuário
@@ -244,7 +244,7 @@ app.post('/api/subscribe', apiLimiter, authenticateJWT, async (req, res) => {
 
 // Para rodar localmente (Vercel não usa isso)
 if (require.main === module) {
-    const PORT = process.env.PORT || 3000;
+    const PORT = 3001;
     app.listen(PORT, '0.0.0.0', () => {
         console.log(`🛡️  Backend ELEGANCE: http://0.0.0.0:${PORT}`);
     });
