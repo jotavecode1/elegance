@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 btn.disabled = false;
             }
         } catch (e) {
-            alert('Erro de conexão.');
+            alert('Erro de conexão ao servidor: ' + e.message);
             btn.textContent = 'Assinar Agora';
             btn.disabled = false;
         }
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 setTimeout(() => { loginError.textContent = ''; }, 3000);
             }
         } catch (error) {
-            loginError.textContent = 'Erro de conexão.';
+            loginError.textContent = 'Erro de conexão: ' + error.message;
         }
     });
 
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else {
                 registerError.textContent = result.message;
             }
-        } catch (error) { registerError.textContent = 'Erro de conexão.'; }
+        } catch (error) { registerError.textContent = 'Erro de conexão: ' + error.message; }
     });
 
     // 1. UI Elements Dashboard
@@ -218,7 +218,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (response.status === 403) return logout();
             sales = await response.json();
             updateUI();
-        } catch (error) { console.error('Error fetching sales:', error); }
+        } catch (error) { 
+            console.error('Error fetching sales:', error); 
+            alert('Falha ao carregar vendas: ' + error.message);
+        }
     };
 
     const updateUI = () => {
@@ -338,9 +341,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     fetchSales();
                 }
             } else {
-                alert('Erro ao processar venda.');
+                alert('Erro ao processar venda: ' + (result.error || 'Verifique os dados.'));
             }
-        } catch (error) { alert('Erro ao salvar.'); }
+        } catch (error) { alert('Erro ao salvar venda: ' + error.message); }
         finally {
             btn.textContent = 'Registrar Venda';
             btn.disabled = false;
