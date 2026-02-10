@@ -1,6 +1,59 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // --- CHECAR STATUS DE PAGAMENTO NA URL ---
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') alert('Pagamento realizado com sucesso!');
+    if (urlParams.get('success') === 'subscription') alert('Assinatura realizada com sucesso!');
+    if (urlParams.get('canceled') === 'true') alert('Pagamento cancelado ou falhou.');
     // --- BACKEND CONFIG ---
-    const API_URL = 'http://localhost:3000/api';
+    let API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://127.0.0.1:3000/api' 
+        : '/api';
+
+    // --- TAB SWITCHING ---
+    const tabDashboard = document.getElementById('tab-dashboard');
+    const tabSubscription = document.getElementById('tab-subscription');
+    const dashboardSection = document.getElementById('dashboard-section');
+    const subscriptionSection = document.getElementById('subscription-section');
+
+    tabDashboard.addEventListener('click', () => {
+        tabDashboard.classList.add('active');
+        tabSubscription.classList.remove('active');
+        dashboardSection.style.display = 'block';
+        subscriptionSection.style.display = 'none';
+        fetchSales();
+    });
+
+    tabSubscription.addEventListener('click', () => {
+        tabSubscription.classList.add('active');
+        tabDashboard.classList.remove('active');
+        dashboardSection.style.display = 'none';
+        subscriptionSection.style.display = 'flex';
+    });
+
+    document.getElementById('btn-subscribe').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-subscribe');
+        btn.textContent = 'Processando...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(`${API_URL}/subscribe`, {
+                method: 'POST',
+                headers: getHeaders()
+            });
+            const result = await response.json();
+            if (result.checkout_url) {
+                window.location.href = result.checkout_url;
+            } else {
+                alert('Erro ao carregar checkout: ' + (result.error || 'link não gerado'));
+                btn.textContent = 'Assinar Agora';
+                btn.disabled = false;
+            }
+        } catch (e) {
+            alert('Erro de conexão.');
+            btn.textContent = 'Assinar Agora';
+            btn.disabled = false;
+        }
+    });
 
     // --- LOGIN & REGISTER & CHANGE PASS TOGGLE ---
     const loginView = document.getElementById('login-view');
@@ -271,11 +324,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 headers: getHeaders(),
                 body: JSON.stringify(saleData)
             });
-            if (response.ok) {
-                salesForm.reset();
-                itemsContainer.innerHTML = '';
-                addItemBtn.click();
-                fetchSales();
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                if (result.checkout_url) {
+                    alert('Venda registrada! Redirecionando para o pagamento...');
+                    window.location.href = result.checkout_url;
+                } else {
+                    salesForm.reset();
+                    itemsContainer.innerHTML = '';
+                    addItemBtn.click();
+                    fetchSales();
+                }
+            } else {
+                alert('Erro ao processar venda.');
             }
         } catch (error) { alert('Erro ao salvar.'); }
         finally {

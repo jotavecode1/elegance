@@ -270,6 +270,97 @@ td { padding: 12px; border-bottom: 1px solid #f5f5f5; }
 
 .status-tag { margin-top: 40px; font-size: 0.65rem; color: #ccc; text-align: center; letter-spacing: 2px; }
 
+/* Main Navigation Tabs */
+.main-nav {
+    display: flex;
+    gap: 1rem;
+    margin-right: 2rem;
+}
+
+.btn-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-tab:hover {
+    color: var(--accent);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.btn-tab.active {
+    color: #fff;
+    background: var(--accent);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Subscription Panel */
+.subscription-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 60vh;
+}
+
+.subscription-card {
+    max-width: 500px;
+    width: 100%;
+    padding: 3rem;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.sub-header {
+    margin-bottom: 2rem;
+}
+
+.price-tag {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 1rem 0;
+}
+
+.price-tag span {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.benefit-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-check {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: bold;
+}
+
+.sub-muted {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
 /* Login Styles */
 .login-container {
     position: fixed;
