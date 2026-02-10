@@ -19,6 +19,7 @@
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
-    "mercadopago": "^2.12.0"
+    "mercadopago": "^2.12.0",
+    "stripe": "^20.3.1"
   }
 }
