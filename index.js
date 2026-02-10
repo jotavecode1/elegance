@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (urlParams.get('success') === 'subscription') alert('Assinatura realizada com sucesso!');
     if (urlParams.get('canceled') === 'true') alert('Pagamento cancelado ou falhou.');
     // --- BACKEND CONFIG ---
-    let API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-        ? 'http://127.0.0.1:3000/api' 
-        : '/api';
+    let API_URL = 'http://127.0.0.1:3000/api'; // Default local
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && window.location.hostname !== '') {
+        API_URL = '/api'; // Versão Live (Vercel)
+    }
 
     // --- TAB SWITCHING ---
     const tabDashboard = document.getElementById('tab-dashboard');
