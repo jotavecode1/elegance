@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({ user, pass })
             });
 
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`HTTP ${response.status}: ${text}`);
+            }
+
             const result = await response.json();
 
             if (result.success) {

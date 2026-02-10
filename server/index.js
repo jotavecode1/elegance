@@ -28,6 +28,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Logger para depuração
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
 // --- 2. RATE LIMITING ---
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, 
