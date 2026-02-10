@@ -13,25 +13,20 @@ const preference = new Preference(client);
 
 const app = express();
 
-// --- 1. CONFIGURAÇÕES DE SEGURANÇA (HEADERS & CORS) ---
+// --- 1. MIDDLEWARE GLOBAL ---
 app.use(helmet()); 
-
-app.get('/api/ping', (req, res) => res.json({ success: true, message: 'Servidor Elegance 3001 Online' }));
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Permitir tudo momentaneamente para resolver o erro de conexão do usuário
-        callback(null, true);
-    },
-    credentials: true,
-    optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+app.use(cors()); // CORS simples para evitar erros de conexão local
 app.use(express.json());
 
 // Logger para depuração
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
+});
+
+// --- 2. DIAGNÓSTICO ---
+app.get('/api/ping', (req, res) => {
+    res.json({ success: true, message: 'Servidor Elegance Online 3001' });
 });
 
 // --- 2. RATE LIMITING ---
